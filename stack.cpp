@@ -1,11 +1,25 @@
 #include <iostream>
 using namespace std;
-const int MAX_SIZE = 100;
+class StackoverflowException : public exception
+{
+    virtual const char *what() const throw()
+    {
+        return "\nStack overflow\n";
+    }
+};
+class StackunderflowException : public exception
+{
+    virtual const char *what() const throw()
+    {
+        return "\nStack underflow\n";
+    }
+};
 //generic implementation of standard Stack data structure using templates
 template <class T>
 class Stack
 {
   private:
+    static const int MAX_SIZE = 100;
     T data[MAX_SIZE];
     int top;
 
@@ -15,37 +29,61 @@ class Stack
         top = -1;
     }
 
-    void Push(T element)
+    void Push(const T element)
     {
         if (top >= MAX_SIZE)
         {
-            cout << "Stack overflow\n";
+            StackoverflowException e;
+            throw e;
         }
-        data[++top] = element;
+        else
+        {
+            data[++top] = element;
+        }
     }
 
     T Pop()
     {
-        if (top == -1)
+        if (top <= -1)
         {
-            cout << "Stack underflow\n";
+            StackunderflowException e;
+            throw e;
         }
-        return data[top--];
+        else
+        {
+            return data[top--];
+        }
     }
 
     T Top()
     {
-        return data[top];
+        if (top <= -1)
+        {
+            StackunderflowException e;
+            throw e;
+        }
+        else
+        {
+            return data[top];
+        }
     }
 
     int Size()
     {
-        return top + 1;
+        if (top <= -1)
+        {
+            StackunderflowException e;
+            throw e;
+        }
+        else
+        {
+            return top + 1;
+        }
     }
 
     bool isEmpty()
     {
-        return (top == -1) ? true : false;
+        return (top <= -1) ? true : false;
     }
 };
 

@@ -1,12 +1,25 @@
-#include <iostream>
-#include <cstdlib>
+#include <bits/stdc++.h>
 using namespace std;
-const int MAX_SIZE = 100;
+class QueueFullException : public exception
+{
+    virtual const char *what() const throw()
+    {
+        return "\nQueue is full\n";
+    }
+};
+class QueueEmptyException : public exception
+{
+    virtual const char *what() const throw()
+    {
+        return "\nQueue is empty\n";
+    }
+};
 //generic implementation of standard Queue data structure using templates
 template <class T>
 class Queue
 {
   private:
+    static const int MAX_SIZE = 100;
     T data[MAX_SIZE];
     int front;
     int rear;
@@ -18,28 +31,46 @@ class Queue
         rear = 0;
     }
 
-    void Enqueue(T element)
+    void Enqueue(const T element)
     {
         if (Size() == MAX_SIZE - 1)
-            cout << "Queue full\n";
-        data[rear] = element;
-        rear = ++rear % MAX_SIZE;
+        {
+            QueueFullException e;
+            throw e;
+        }
+        else
+        {
+            data[rear] = element;
+            rear = ++rear % MAX_SIZE;
+        }
     }
 
-    int Dequeue()
+    T Dequeue()
     {
         if (isEmpty())
-            cout << "Queue empty\n";
-        T ret = data[front];
-        front = ++front % MAX_SIZE;
-        return ret;
+        {
+            QueueEmptyException e;
+            throw e;
+        }
+        else
+        {
+            T ret = data[front];
+            front = ++front % MAX_SIZE;
+            return ret;
+        }
     }
 
-    int Front()
+    T Front()
     {
         if (isEmpty())
-            cout << "Queue empty\n";
-        return data[front];
+        {
+            QueueEmptyException e;
+            throw e;
+        }
+        else
+        {
+            return data[front];
+        }
     }
 
     int Size()

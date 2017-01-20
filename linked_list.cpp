@@ -20,7 +20,7 @@ class LinkedList
         size = 0;
         start = NULL;
     }
-    struct node<T> *create_node(T value)
+    struct node<T> *create_node(const T value)
     {
         struct node<T> *temp = new (struct node<T>);
         temp->next = NULL;
@@ -28,8 +28,7 @@ class LinkedList
         return temp;
     }
     // functions to insert values
-    void
-    insert_begin(T value)
+    void insert_begin(const T value)
     {
         struct node<T> *temp = create_node(value);
         if (start != NULL)
@@ -39,7 +38,7 @@ class LinkedList
         start = temp;
         size++;
     }
-    void insert(T value)
+    void insert(const T value)
     {
         struct node<T> *temp = start;
         if (temp != NULL)
@@ -54,7 +53,7 @@ class LinkedList
             insert_begin(value);
         }
     }
-    void insert_pos(T value, int pos)
+    void insert_pos(const T value, int pos)
     {
         if (pos == 1)
         {
@@ -81,7 +80,7 @@ class LinkedList
         }
     }
     // search the list
-    int search(T value)
+    int search(const T value)
     {
         struct node<T> *temp = start;
         for (int pos = 1; temp != NULL; pos++)
@@ -95,7 +94,7 @@ class LinkedList
         return -1;
     }
     // delete from list
-    void remove_pos(int pos)
+    void remove_pos(const int pos)
     {
         if (pos > 1 && pos <= size)
         {
@@ -121,7 +120,7 @@ class LinkedList
             cout << "\nNo such entry in list\n";
         }
     }
-    void remove(T value)
+    void remove(const T value)
     {
         remove_pos(search(value));
     }
