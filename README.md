@@ -7,7 +7,7 @@ Will be updated periodically. You are free to use these codes wherever you want 
 
 Pull requests
 ----------------
-If you spot any errors in the implementation(s), please let me know by submitting a relevant pull request.
+If you spot any errors in the implementation(s), please let me know by raising an issue.
 
 License
 ----------------
