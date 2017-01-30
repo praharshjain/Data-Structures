@@ -21,8 +21,7 @@ class Queue
   private:
     static const int MAX_SIZE = 100;
     T data[MAX_SIZE];
-    int front;
-    int rear;
+    int front, rear;
 
   public:
     Queue()
@@ -80,7 +79,7 @@ class Queue
 
     bool isEmpty()
     {
-        return (front == rear) ? true : false;
+        return (front == rear);
     }
 };
 
