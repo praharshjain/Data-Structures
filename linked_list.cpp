@@ -31,10 +31,7 @@ class LinkedList
     void insert_begin(const T value)
     {
         struct node<T> *temp = create_node(value);
-        if (start != NULL)
-        {
-            temp->next = start;
-        }
+        temp->next = start;
         start = temp;
         size++;
     }
