@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-//generic implementation of Dobuly Linked List using templates
+//generic implementation of Doubly Linked List using templates
 template <class T>
 struct node
 {
