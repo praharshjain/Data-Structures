@@ -64,6 +64,91 @@ class BST
         }
         size++;
     }
+    struct node<T> *search(const T value)
+    {
+        struct node<T> *temp = root;
+        while (temp != NULL)
+        {
+            if (temp->data > value)
+                temp = temp->left;
+            else if (temp->data < value)
+                temp = temp->right;
+            else
+                return temp;
+        }
+        return NULL;
+    }
+    void remove(const T value)
+    {
+        if (size <= 0)
+            return;
+        if (size == 1 && root->data == value)
+        {
+            delete root;
+            root = NULL;
+            size = 0;
+        }
+        struct node<T> *temp = root, *parent = root;
+        bool found = false;
+        while (temp != NULL)
+        {
+            if (temp->data > value)
+            {
+                parent = temp;
+                temp = temp->left;
+            }
+            else if (temp->data < value)
+            {
+                parent = temp;
+                temp = temp->right;
+            }
+            else
+            {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+            return;
+        if (temp->left && temp->right)
+        {
+            struct node<T> *child = temp->right, *par = temp;
+            while (child->left)
+            {
+                par = child;
+                child = child->left;
+            }
+            temp->data = child->data;
+            if (par->left == child)
+                par->left = NULL;
+            else
+                par->right = NULL;
+            delete child;
+        }
+        else if (temp->left)
+        {
+            temp->data = temp->left->data;
+            struct node<T> *curr = temp->left;
+            temp->left = NULL;
+            delete curr;
+        }
+        else if (temp->right)
+        {
+            temp->data = temp->right->data;
+            struct node<T> *curr = temp->right;
+            temp->right = NULL;
+            delete curr;
+        }
+        else
+        {
+            if (parent->left == temp)
+                parent->left = NULL;
+            else
+                parent->right = NULL;
+            delete temp;
+        }
+        size--;
+    }
     void inorder(struct node<T> *tree)
     {
         if (tree)
@@ -108,6 +193,8 @@ class BST
     }
     void traverse(int i = 1)
     {
+        if (!root)
+            return;
         switch (i)
         {
         case 1:
@@ -163,4 +250,15 @@ int main()
     tree.traverse(3);
     cout << "Level order traversal\n";
     tree.traverse(4);
+    cout << "\n";
+    int x = -2;
+    struct node<int> *temp = tree.search(x);
+    if (temp)
+        cout << temp->data << " found";
+    else
+        cout << x << " not found";
+    tree.remove(9);
+    cout << "\nLevel order traversal\n";
+    tree.traverse(4);
+    return 0;
 }
