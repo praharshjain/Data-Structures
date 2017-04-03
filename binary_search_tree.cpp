@@ -178,7 +178,7 @@ class BST
     }
     void levelorder(struct node<T> *root)
     {
-        queue<struct node<int> *> q;
+        queue<struct node<T> *> q;
         q.push(root);
         while (q.size())
         {
