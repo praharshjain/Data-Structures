@@ -14,6 +14,7 @@ class BinaryTree
   private:
     int size;
     struct node<T> *root;
+    queue<struct node<T> *> q;
 
   public:
     BinaryTree()
@@ -30,22 +31,22 @@ class BinaryTree
         return temp;
     }
     //insertion in complete binary tree
-    void insert(const T value, queue<struct node<T> *> *q)
+    void insert(const T value)
     {
         struct node<T> *temp = create_node(value);
         if (root == NULL)
             root = temp;
         else
         {
-            struct node<T> *front = (*q).front();
+            struct node<T> *front = q.front();
             if (front->left == NULL)
                 front->left = temp;
             else if (front->right == NULL)
                 front->right = temp;
             if (front->left && front->right)
-                (*q).pop();
+                q.pop();
         }
-        (*q).push(temp);
+        q.push(temp);
         size++;
     }
     void inorder(struct node<T> *tree)
@@ -129,9 +130,8 @@ class BinaryTree
 int main()
 {
     BinaryTree<int> tree;
-    queue<struct node<int> *> q;
     for (int i = 0; i < 5; i++)
-        tree.insert(i, &q);
+        tree.insert(i);
     cout << "Size = " << tree.Size() << "\n";
     cout << "Height = " << tree.height() << "\n";
     cout << "Inorder traversal\n";
